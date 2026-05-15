@@ -18,3 +18,5 @@ dataset/
 data/
 pnnx-windows/
 deploy_ncnn/
+test_images/
+dataset_3fen/

@@ -94,11 +94,12 @@ def split_samples_stratified(
 
 
 def random_augment_bgr(image: np.ndarray) -> np.ndarray:
+    #水平翻转
     if random.random() < 0.5:
         image = cv2.flip(image, 1)
-
-    if random.random() < 0.7:
-        angle = random.uniform(-10.0, 10.0)
+    #旋转、缩放
+    if random.random() < 0.5:#0.7
+        angle = random.uniform(-5.0, 5.0)#10.0
         scale = random.uniform(0.92, 1.08)
         center = (image.shape[1] / 2.0, image.shape[0] / 2.0)
         matrix = cv2.getRotationMatrix2D(center, angle, scale)
@@ -109,14 +110,15 @@ def random_augment_bgr(image: np.ndarray) -> np.ndarray:
             flags=cv2.INTER_LINEAR,
             borderMode=cv2.BORDER_REFLECT_101,
         )
-
+    #亮度、对比度调整
     if random.random() < 0.7:
-        alpha = random.uniform(0.85, 1.15)
+        alpha = random.uniform(0.85, 1.40) #0.8, 1.15
         beta = random.uniform(-15.0, 15.0)
         image = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
 
-    if random.random() < 0.15:
-        image = cv2.GaussianBlur(image, (3, 3), 0)
+    #高斯模糊
+    #if random.random() < 0.15:
+    #    image = cv2.GaussianBlur(image, (3, 3), 0)
 
     return image
 
